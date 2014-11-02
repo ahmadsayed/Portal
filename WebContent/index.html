@@ -1,0 +1,155 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Tashbeek your way to the Internet of things</title>
+<meta http-equiv="Content-Language" content="English" />
+<meta name="description" content="MQTT online Client, part of compelete iot solution I build, no need for browser supported websocket, you can try it from your mobile"/>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="stylesheet" type="text/css" href="style.css" media="screen" />
+<script
+	src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.26/angular.min.js"></script>
+</head>
+<body>
+	<div id="wrap">
+		<div id="top"></div>
+		<div id="content">
+			<div class="header">
+				<h1>
+					<a href="#">Server side MQTT Client</a>
+				</h1>
+				<h2>Connect to your MQTT server without coding</h2>
+			</div>
+
+			<div class="breadcrumbs">
+				<a href="#">Home</a> &middot; Connection
+			</div>
+
+			<div class="middle">
+				<div ng-app="" ng-controller="mqttController">
+					<h2>Server Connection</h2>
+					<div>
+						<table>
+							<tr>
+								<td>Client ID:</td>
+								<td><input type="text" ng-model="clientId"></td>
+							</tr>
+							<tr>
+								<td>Host :</td>
+								<td><input type="text" ng-model="host"></td>
+							</tr>
+							<tr>
+								<td>Port :</td>
+								<td><input type="text" ng-model="port"></td>
+							</tr>
+							<tr>
+								<td>Username :</td>
+								<td><input type="text" ng-model="username"></td>
+							</tr>
+							<tr>
+								<td>Password :</td>
+								<td><input type="text" ng-model="password"></td>
+							</tr>
+							<tr>
+								<td colspan="2" align="center">
+									<button ng-click="connect()">Connect</button>
+								</td>
+							</tr>
+							<tr>
+								<td colspan="2" align="center">Status : <span
+									ng-bind="status"> </span>
+								</td>
+							</tr>
+						</table>
+					</div>
+					<h2>Publish</h2>
+					<div>
+						<table>
+							<tr>
+								<td>Topic :</td>
+								<td><input type="text" ng-model="topic"></td>
+							</tr>
+							<tr>
+								<td>Message :</td>
+								<td><input type="text" ng-model="message"></td>
+							</tr>
+							<tr>
+								<td colspan="2" align="center">
+									<button ng-click="publish()">Publish</button>
+								</td>
+
+								</td>
+							</tr>
+						</table>
+					</div>
+
+				</div>
+				<script>
+					function mqttController($scope, $http) {
+						$scope.fullUrl = function() {
+							return "mqtt://" + $scope.host + ":" + $scope.port;
+						}
+						$scope.connect = function() {
+							$http.get(
+									"TestServlet?command=connect&clientId="
+											+ $scope.clientId + "&host="
+											+ $scope.host + "&port="
+											+ $scope.port + "&username="
+											+ $scope.username + "&password="
+											+ $scope.password).success(
+									function(response) {
+										$scope.status = response;
+									});
+						}
+						$scope.publish = function() {
+							$http.get(
+									"TestServlet?command=publish&topic="
+											+ $scope.topic + "&payload="
+											+ $scope.message).success(
+									function(response) {
+										$scope.status = response
+									});
+						}
+					}
+				</script>
+
+			</div>
+
+			<div class="right">
+
+				<h2>Navigation</h2>
+
+				<ul>
+					<li><a
+						href="https://www.youtube.com/channel/UCgjOA7hLWCkKn-mVKmVsseA">My
+							Youtube channel</a></li>
+					<li><a href="https://github.com/ahmadsayed">GitHub code</a></li>
+					<li><a href="https://www.facebook.com/ahmadSayed83">Facebook
+							page</a></li>
+				</ul>
+				<script async
+					src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+				<!-- AdsCode -->
+				<ins class="adsbygoogle"
+					style="display: inline-block; width: 300px; height: 600px"
+					data-ad-client="ca-pub-4504992707949097" data-ad-slot="5354829166"></ins>
+				<script>
+					(adsbygoogle = window.adsbygoogle || []).push({});
+				</script>
+
+			</div>
+
+			<div id="clear"></div>
+
+		</div>
+
+		<div id="bottom"></div>
+
+	</div>
+
+	<div id="footer">
+		Design by <a href="http://www.minimalistic-design.net">Minimalistic
+			Design</a>
+	</div>
+
+</body>
+</html>
